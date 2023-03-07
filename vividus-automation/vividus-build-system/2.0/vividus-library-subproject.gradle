@@ -14,12 +14,27 @@
  * limitations under the License.
  */
 
- buildscript {
+ext.buildSystemConfigDir = new File(buildscript.sourceFile.parentFile, 'config')
+ext.gradleScriptDir = new File(buildscript.sourceFile.parentFile, 'gradle')
+apply from: "${gradleScriptDir}/vividus-library.gradle"
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+buildscript {
     repositories {
         gradlePluginPortal()
     }
     dependencies {
-        classpath(group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '3.5.0.2730')
+        classpath(group: 'io.spring.nohttp', name: 'nohttp-gradle', version: '0.0.11') {
+            // exclude this to stop warnings about multiple SLF4J bindings.
+            exclude group: 'ch.qos.logback', module: 'logback-classic'
+        }
     }
- }
- apply plugin: org.sonarqube.gradle.SonarQubePlugin
+}
+apply plugin: io.spring.nohttp.gradle.NoHttpPlugin
+nohttp {
+    source.excludes = ['**/src/test/**', '**/*.min.js'] + gitignorePatterns
+}

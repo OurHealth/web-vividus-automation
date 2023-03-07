@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
 def rootScriptDir =  buildscript.sourceFile.parentFile
 ext.gradleScriptDir = new File(buildscript.sourceFile.parentFile, 'gradle')
 apply from: "${gradleScriptDir}/project.gradle"
-apply from: "${rootScriptDir}/vividus-library-subproject.gradle"
+apply from: "${rootScriptDir}/vividus-test-subproject.gradle"
